@@ -262,21 +262,34 @@ def get_ai_summary(d, key):
         upside = f'{d["upside"]:.1f}%' if d["upside"] is not None else "N/A"
 
         content = f"""
-Analyze this stock like a senior portfolio manager.
+You are inside a professional stock risk analysis web app used by retail investors.
 
-Ticker: {d['ticker']}
+Write a short institutional-style investment brief for this stock.
+
+This app measures:
+• Annualized return and volatility
+• Sharpe ratio and maximum drawdown
+• Benchmark outperformance vs {d['bench_label']}
+• Options market sentiment using put/call data
+• Analyst price targets and upside
+• A risk rating based on volatility
+
+Stock: {d['ticker']}
+
+Metrics:
 Annual Return: {d['annual_return']*100:.2f}%
 Volatility: {d['annual_volatility']*100:.2f}%
-Sharpe: {d['sharpe_ratio']:.2f}
+Sharpe Ratio: {d['sharpe_ratio']:.2f}
 Max Drawdown: {d['max_drawdown']*100:.2f}%
-Risk: {d['risk_rating']}
-Benchmark ({d['bench_label']}): {bench_ret}
+Risk Rating: {d['risk_rating']}
+Benchmark Return: {bench_ret}
 Options Signal: {d['options_signal']}
-Price Target: {d['price_target']}
 Current Price: {d['current_price']}
-Upside: {upside}
+Analyst Price Target: {d['price_target']}
+Estimated Upside: {upside}
 
-Give a 4–5 sentence institutional investment brief.
+Explain whether this stock suits conservative, balanced, or aggressive portfolios and why.
+Keep it concise (4–5 sentences), professional, and actionable.
 """
 
         msg = client.messages.create(
